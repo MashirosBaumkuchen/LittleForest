@@ -1,8 +1,11 @@
 package com.jascal.clare.main.presenter;
 
 import com.jascal.clare.Constant;
+import com.jascal.clare.bean.HistoryEvent;
 import com.jascal.clare.main.MainContract;
 import com.jascal.clare.main.model.TOHistoryModel;
+
+import java.util.List;
 
 /**
  * @author No.47 create at 2017/8/28.
@@ -26,7 +29,12 @@ public class MainPresenter implements MainContract.Presenter, TOHistoryModel.OnR
     }
 
     @Override
-    public void onSuccess(String data) {
+    public void onSuccess(List<HistoryEvent> data) {
         view.showHistoryOfToday(data);
+    }
+
+    @Override
+    public void onFail(String reason) {
+        view.showGetHistoryFail(reason);
     }
 }

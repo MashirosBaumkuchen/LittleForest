@@ -76,4 +76,8 @@ public class HistoryEvent {
     public void setYear(int year) {
         this.year = year;
     }
+
+    public String toString() {
+        return day + "-" + des + "-" + id + "-" + lunar + "-" + month + "-" + pic + "-" + title + "-" + year;
+    }
 }

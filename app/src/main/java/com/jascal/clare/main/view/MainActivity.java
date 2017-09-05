@@ -1,25 +1,22 @@
 package com.jascal.clare.main.view;
 
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.jascal.clare.R;
 import com.jascal.clare.base.BaseActivity;
 import com.jascal.clare.bean.HistoryEvent;
 import com.jascal.clare.main.MainContract;
+import com.jascal.clare.main.adapter.RecyclerAdapter;
 import com.jascal.clare.main.presenter.MainPresenter;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -47,12 +44,19 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         new MainPresenter(this);
-        initToolbar();
         presenter.getHistoryToday(11, 1);
+        initToolbar();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh.setRefreshing(false);
+            }
+        });
     }
 
     private void initToolbar() {
-        toolbar.setTitle("");
         setSupportActionBar(toolbar);
     }
 
@@ -61,8 +65,17 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         this.presenter = presenter;
     }
 
-    @Override
-    public void showHistoryOfToday(String data) {
 
+    @Override
+    public void showHistoryOfToday(List<HistoryEvent> data) {
+        // TODO: 2017/9/4
+        Log.d("showHistoryOfToday", data.get(1).toString());
+        recyclerView.setAdapter(new RecyclerAdapter(data));
+    }
+
+    @Override
+    public void showGetHistoryFail(String reason) {
+        // TODO: 2017/9/4
+        Log.d("showGetHistoryFail", reason);
     }
 }

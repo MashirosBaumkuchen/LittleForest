@@ -1,8 +1,16 @@
 package com.jascal.clare.main.model;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jascal.clare.Constant;
+import com.jascal.clare.bean.HistoryEvent;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -22,6 +30,7 @@ public class TOHistoryModel {
     private String v;
     private String url;
     private TOHistoryModel.OnResponse callback;
+    private List<HistoryEvent> eventList = new ArrayList<>();
 
     public TOHistoryModel(TOHBuilder tohBuilder) {
         this.month = tohBuilder.month;
@@ -41,8 +50,21 @@ public class TOHistoryModel {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Gson gson = new Gson();
+                JSONObject object = null;
                 try {
-                    callback.onSuccess(response.body().string());
+                    object = new JSONObject(response.body().string());
+                    if (object.getInt(Constant.HISTORY_OF_TODAY_ERROR_CODE) == Constant.HISTORY_OF_TODAY_SUCCESS_CODE) {
+                        eventList = gson.fromJson(
+                                object.getString(Constant.HISTORY_OF_TODAY_SUCCESS_RESULT),
+                                new TypeToken<List<HistoryEvent>>() {
+                                }.getType());
+                        callback.onSuccess(eventList);
+                    } else {
+                        callback.onFail(object.getString(Constant.HISTORY_OF_TODAY_REASON));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -61,7 +83,9 @@ public class TOHistoryModel {
     }
 
     public interface OnResponse {
-        void onSuccess(String data);
+        void onSuccess(List<HistoryEvent> data);
+
+        void onFail(String reason);
     }
 
     public static class TOHBuilder {
