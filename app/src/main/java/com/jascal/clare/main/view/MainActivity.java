@@ -1,5 +1,6 @@
 package com.jascal.clare.main.view;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -7,8 +8,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.jascal.clare.Constant;
@@ -20,6 +24,8 @@ import com.jascal.clare.main.adapter.RecyclerAdapter;
 import com.jascal.clare.main.presenter.MainPresenter;
 import com.jascal.clare.utils.Logger;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +36,7 @@ import butterknife.ButterKnife;
  * @author No.47 create at 2017/8/28 14:57
  */
 public class MainActivity extends BaseActivity implements MainContract.View {
-    private String tag = "MainActivity";
+    private String TAG = "MainActivity";
     private MainContract.Presenter presenter;
     @Bind(R.id.main_drawer)
     DrawerLayout drawerLayout;
@@ -61,12 +67,16 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     private void initRecyclerView() {
+        Date date = new Date(Calendar.getInstance().getTimeInMillis());
+        Logger.d(TAG, date.getMonth()+""+date.getDay()+" "+date.toString());
+        String d[] = date.toString().split("-");
+        Logger.d(TAG, (new Integer(d[1]))+""+(new Integer(d[2])));
         if (Constant.DEBUG) {
             initDebugData();
         } else {
-            presenter.getHistoryToday(11, 1);
+            presenter.getHistoryToday(Integer.valueOf(d[1]), Integer.valueOf(d[2]));
         }
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setHasFixedSize(true);
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -91,7 +101,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             he.setYear(1900);
             data.add(he);
         }
-        recyclerView.setAdapter(new RecyclerAdapter(data));
+        recyclerView.setAdapter(new RecyclerAdapter(MainActivity.this, data));
         title.setText(data.get(0).getMonth() + "/" + data.get(0).getDay());
     }
 
@@ -101,7 +111,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             @Override
             public void onClick(View view) {
                 drawerLayout.openDrawer(navigationView);
-                Logger.d(tag, MainActivity.class.getName() + " " + view.getId() + "");
+                Logger.d(TAG, MainActivity.class.getName() + " " + view.getId() + "");
             }
         });
     }
@@ -115,14 +125,14 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Override
     public void showHistoryOfToday(List<HistoryEvent.Event> data) {
         // TODO: 2017/9/4
-        Logger.d(tag, data.get(1).toString());
-        recyclerView.setAdapter(new RecyclerAdapter(data));
+        Logger.d(TAG, data.get(1).toString());
+        recyclerView.setAdapter(new RecyclerAdapter(MainActivity.this, data));
         title.setText(data.get(0).getMonth() + "/" + data.get(0).getDay());
     }
 
     @Override
     public void showGetHistoryFail(String reason) {
         // TODO: 2017/9/4
-        Logger.d(tag, reason);
+        Logger.d(TAG, reason);
     }
 }

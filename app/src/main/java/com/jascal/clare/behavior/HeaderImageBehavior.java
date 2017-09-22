@@ -10,6 +10,7 @@ import android.view.View;
 import com.jascal.clare.R;
 
 public class HeaderImageBehavior extends CoordinatorLayout.Behavior {
+    private final String TAG = "HeaderImageBehavior";
 
     private float distanceY;
 

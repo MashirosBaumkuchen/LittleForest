@@ -6,6 +6,7 @@ import java.util.List;
  * @author No.47 create at 2017/9/18.
  */
 public class HistoryEvent {
+    private final String TAG = "HistoryEvent";
 
     /**
      * error_code : 0

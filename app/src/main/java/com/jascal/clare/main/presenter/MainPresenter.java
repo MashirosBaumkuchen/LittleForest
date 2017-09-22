@@ -11,6 +11,7 @@ import java.util.List;
  * @author No.47 create at 2017/8/28.
  */
 public class MainPresenter implements MainContract.Presenter, TOHistoryModel.OnResponse {
+    private final String TAG = "MainPresenter";
     MainContract.View view;
 
     public MainPresenter(MainContract.View view) {

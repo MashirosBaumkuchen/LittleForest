@@ -13,6 +13,7 @@ import retrofit2.http.Query;
  * @author No.47 create at 2017/8/31.
  */
 public class LoginModel {
+    private final String TAG = "LoginModel";
     private OnResponse callback;
     private Retrofit retrofit;
     private String KEY = "eff36bdaeeb868a6b8057a34f32d1326";

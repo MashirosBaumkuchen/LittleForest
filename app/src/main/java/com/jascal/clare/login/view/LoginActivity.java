@@ -15,6 +15,7 @@ import retrofit2.Response;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity implements LoginModel.OnResponse {
+    private final String TAG = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
