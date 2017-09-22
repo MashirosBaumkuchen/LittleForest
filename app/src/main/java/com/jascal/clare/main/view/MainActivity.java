@@ -2,8 +2,10 @@ package com.jascal.clare.main.view;
 
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -64,13 +67,45 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
         initRecyclerView();
         initToolbar();
+        initMainMenu();
+    }
+
+    private void initMainMenu() {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        Logger.d(TAG, item.getItemId()+"nav_home");
+                        break;
+                    case R.id.nav_archives:
+                        Logger.d(TAG, item.getItemId()+"nav_archives");
+                        break;
+                    case R.id.nav_tags:
+                        Logger.d(TAG, item.getItemId()+"nav_tags");
+                        break;
+                    case R.id.nav_links:
+                        Logger.d(TAG, item.getItemId()+"nav_links");
+                        break;
+                    case R.id.nav_help:
+                        Logger.d(TAG, item.getItemId()+"nav_help");
+                        break;
+                    case R.id.nav_about:
+                        Logger.d(TAG, item.getItemId()+"nav_about");
+                        break;
+                }
+                Logger.d(TAG, "onNavigationItemSelected");
+                return false;
+            }
+        });
+
     }
 
     private void initRecyclerView() {
         Date date = new Date(Calendar.getInstance().getTimeInMillis());
-        Logger.d(TAG, date.getMonth()+""+date.getDay()+" "+date.toString());
+        Logger.d(TAG, date.getMonth() + "" + date.getDay() + " " + date.toString());
         String d[] = date.toString().split("-");
-        Logger.d(TAG, (new Integer(d[1]))+""+(new Integer(d[2])));
+        Logger.d(TAG, (new Integer(d[1])) + "" + (new Integer(d[2])));
         if (Constant.DEBUG) {
             initDebugData();
         } else {
@@ -107,6 +142,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     private void initToolbar() {
         setSupportActionBar(toolbar);
+//        toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.mipmap.ic_launcher));// TODO: 2017/9/22 set icon
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

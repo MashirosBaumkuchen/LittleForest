@@ -6,29 +6,31 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@mipmap/ic_launcher_round"
-            android:title="CC Talk" />
+            android:title="Home" />
         <item
-            android:id="@+id/nav_messages"
+            android:id="@+id/nav_archives"
             android:icon="@mipmap/ic_launcher_round"
-            android:title="HJ Class" />
+            android:title="Archives" />
         <item
-            android:id="@+id/nav_friends"
+            android:id="@+id/nav_tags"
             android:icon="@mipmap/ic_launcher_round"
-            android:title="Words" />
+            android:title="Tags" />
         <item
-            android:id="@+id/nav_discussion"
+            android:id="@+id/nav_links"
             android:icon="@mipmap/ic_launcher_round"
-            android:title="Big HJ" />
+            android:title="Links" />
     </group>
 
     <item android:title="Version">
         <menu>
             <item
+                android:id="@+id/nav_help"
                 android:icon="@mipmap/ic_launcher_round"
-                android:title="Android" />
+                android:title="Help" />
             <item
+                android:id="@+id/nav_about"
                 android:icon="@mipmap/ic_launcher_round"
-                android:title="iOS" />
+                android:title="about me" />
         </menu>
     </item>
 

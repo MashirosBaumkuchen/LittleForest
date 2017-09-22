@@ -27,6 +27,6 @@ public class Constant {
      * @author No.47
      * create at 2017/9/5 10:42
      */
-    public static final boolean DEBUG = true;
+    public static final boolean DEBUG = false;
     public static final boolean RELEASE = true;
 }
