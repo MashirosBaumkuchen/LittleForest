@@ -12,7 +12,7 @@ public interface MainContract {
     interface View {
         void setPresenter(MainContract.Presenter presenter);
 
-        void showHistoryOfToday(List<HistoryEvent> data);
+        void showHistoryOfToday(List<HistoryEvent.Event> data);
 
         void showGetHistoryFail(String reason);
     }

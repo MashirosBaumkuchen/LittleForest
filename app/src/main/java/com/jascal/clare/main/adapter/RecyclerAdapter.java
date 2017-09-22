@@ -7,15 +7,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.jascal.clare.R;
 import com.jascal.clare.bean.HistoryEvent;
+
 import java.util.List;
 
 /**
  * @author No.47 create at 2017/9/4.
  */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
-    private List<HistoryEvent> data;
+    private List<HistoryEvent.Event> data;
 
-    public RecyclerAdapter(List<HistoryEvent> data) {
+    public RecyclerAdapter(List<HistoryEvent.Event> data) {
         this.data = data;
     }
 

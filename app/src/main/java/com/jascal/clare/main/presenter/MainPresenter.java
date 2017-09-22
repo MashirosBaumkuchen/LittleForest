@@ -29,7 +29,7 @@ public class MainPresenter implements MainContract.Presenter, TOHistoryModel.OnR
     }
 
     @Override
-    public void onSuccess(List<HistoryEvent> data) {
+    public void onSuccess(List<HistoryEvent.Event> data) {
         view.showHistoryOfToday(data);
     }
 

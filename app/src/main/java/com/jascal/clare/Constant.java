@@ -1,5 +1,7 @@
 package com.jascal.clare;
 
+import java.security.PublicKey;
+
 /**
  * @author No.47 create at 2017/9/1.
  */
@@ -18,4 +20,13 @@ public class Constant {
     public static final int HISTORY_OF_TODAY_SUCCESS_CODE = 0;
     public static final String HISTORY_OF_TODAY_SUCCESS_RESULT = "result";
     public static final String HISTORY_OF_TODAY_REASON = "reason";
+
+    /**
+     * is debug or release
+     *
+     * @author No.47
+     * create at 2017/9/5 10:42
+     */
+    public static final boolean DEBUG = false;
+    public static final boolean RELEASE = true;
 }
